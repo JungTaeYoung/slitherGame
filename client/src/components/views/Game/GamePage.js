@@ -29,6 +29,7 @@ function GamePage() {
         var numInitTimeCheck; //  지렁이속도 초기값
         var numHaste;  // 먹이를 먹을때마다 빨리지는 지렁이의 속도
         var numTimeCut; // 지렁이가 빨리질 수 있는 최대속도 제한
+
         /******크기, 위치관련 변수******/
         var arrWormMoveLeft = new Array();  // 매 턴마다 지렁이 머리의 Left값을 기억하는 배열
         var arrWormMoveTop = new Array(); // 매 턴마다 지렁이 머리의 Top값을 기억하는 배열
@@ -39,10 +40,26 @@ function GamePage() {
         var numHeightCount; // stage의 높이
         var numSquareWidth; // 지렁이의 넓이
         var numSquareHeight;  // 지렁이의 높이
+
+        /*********색깔관련 변수********/
+        var strSkinSelect = 'default';  // 현재 선택한 스킨의 종류
+        var strLightColor = "#FFFFFF";  // 옅은 색깔
+        var strHeavyColor = "#000000";  // 짙은 색깔 
+        var strRandomLightColor = "#FFFFFF";  // 옅은 색깔의 헥사코드값을 임시로 저장하는 변수
+        var strRandomHeavyColor = "#000000";  // 짙은 색깔의 헥사코드값을 임시로 저장하는 변수
+        var strRandomRed; // 랜덤컬러의 10진수 랜덤값을 저장하는 변수
+        var strRandomGreen; // 랜덤컬러의 10진수 랜덤값을 저장하는 변수
+        var strRandomBlue;  // 랜덤컬러의 10진수 랜덤값을 저장하는 변수
+        var strLightRed;  // 옅은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+        var strLightGreen;  // 옅은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+        var strLightBlue; // 옅은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+        var strHeavyRed;  // 짙은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+        var strHeavyGreen;  // 짙은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+        var strHeavyBlue; // 짙은 색깔 랜덤컬러의 헥사코드를 구하는 데 사용되는 변수
+
         /**********그 외 변수**********/
         var strStatus = 'up'; // 키보드 방향키
         var strDifficulty = ''; // 선택한 난이도
-        var strSkinSelect = 'default';
         var bolGameSet = false; // 게임 오버, 게임 클리어 시 true
         var bolFoodSet = false; // 지렁이 먹이 세팅 변수
         var bolCombo = false; // 콤보 유지관련 변수
@@ -50,10 +67,6 @@ function GamePage() {
         var numComboCount = 0;  // 콤보 횟수
         var numScoreCount = 0;  // 현재 점수의 누적값
         var numRecordCount = 0; // 최고로 많은 점수 누적값
-        var numLightColor = "#FFFFFF";  // 옅은 색깔
-        var numHeavyColor = "#000000";  // 짙은 색깔 
-        var numRandomLightColor = "#FFFFFF";  // 옅은 색깔의 헥사코드값을 임시로 저장하는 변수
-        var numRandomHeavyColor = "#000000";  // 짙은 색깔의 헥사코드값을 임시로 저장하는 변수
 
 
         $(window).resize(function (e) {
@@ -62,97 +75,112 @@ function GamePage() {
 
 
 
-        function fnColor() {
-            $('.select_skin .default').hover(function () {
-                numRandomLightColor = "#FFFFFF";
-                numRandomHeavyColor = "#000000";
-                $(this).css({ 'background-color': numRandomHeavyColor, 'color': numRandomLightColor, 'border': 'solid 1px ' + numRandomLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numRandomLightColor, 'color': numRandomHeavyColor, 'border': 'solid 1px ' + numRandomHeavyColor });
-            }).click(function () {
-                strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
-                fnColorSet();
+        function fnColor(){
+            $('.select_skin .default').hover(function(){
+              strRandomLightColor = "#FFFFFF";
+              strRandomHeavyColor = "#000000";
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
+            }, function(){
+              $(this).css({'background-color' : strRandomLightColor, 'color' : strRandomHeavyColor, 'border' : 'solid 1px ' + strRandomHeavyColor});
+            }).click(function(){
+              strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
+              fnColorSet();
             });
-            $('.select_skin .red').hover(function () {
-                numRandomLightColor = "#FF8B8B";
-                numRandomHeavyColor = "#8B0000";
-                $(this).css({ 'background-color': numRandomHeavyColor, 'color': numRandomLightColor, 'border': 'solid 1px ' + numRandomLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numRandomLightColor, 'color': numRandomHeavyColor, 'border': 'solid 1px ' + numRandomHeavyColor });
-            }).click(function () {
-                strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
-                fnColorSet();
+            $('.select_skin .red').hover(function(){
+              strRandomLightColor = "#FF8B8B";
+              strRandomHeavyColor = "#8B0000";
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
+            }, function(){
+              $(this).css({'background-color' : strRandomLightColor, 'color' : strRandomHeavyColor, 'border' : 'solid 1px ' + strRandomHeavyColor});
+            }).click(function(){
+              strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
+              fnColorSet();
             });
-            $('.select_skin .green').hover(function () {
-                numRandomLightColor = "#A1FFA1";
-                numRandomHeavyColor = "#008100";
-                $(this).css({ 'background-color': numRandomHeavyColor, 'color': numRandomLightColor, 'border': 'solid 1px ' + numRandomLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numRandomLightColor, 'color': numRandomHeavyColor, 'border': 'solid 1px ' + numRandomHeavyColor });
-            }).click(function () {
-                strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
-                fnColorSet();
+            $('.select_skin .green').hover(function(){
+              strRandomLightColor = "#A1FFA1";
+              strRandomHeavyColor = "#008100";
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
+            }, function(){
+              $(this).css({'background-color' : strRandomLightColor, 'color' : strRandomHeavyColor, 'border' : 'solid 1px ' + strRandomHeavyColor});
+            }).click(function(){
+              strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
+              fnColorSet();
             });
-            $('.select_skin .blue').hover(function () {
-                numRandomLightColor = "#8888FF";
-                numRandomHeavyColor = "#000091";
-                $(this).css({ 'background-color': numRandomHeavyColor, 'color': numRandomLightColor, 'border': 'solid 1px ' + numRandomLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numRandomLightColor, 'color': numRandomHeavyColor, 'border': 'solid 1px ' + numRandomHeavyColor });
-            }).click(function () {
-                strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
-                fnColorSet();
+            $('.select_skin .blue').hover(function(){
+              strRandomLightColor = "#8888FF";
+              strRandomHeavyColor = "#000091";
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
+            }, function(){
+              $(this).css({'background-color' : strRandomLightColor, 'color' : strRandomHeavyColor, 'border' : 'solid 1px ' + strRandomHeavyColor});
+            }).click(function(){
+              strSkinSelect = $(this).attr('class').split('menuBtn ')[1];
+              fnColorSet();
             });
-            $('.select_skin .random').hover(function () {
-                var strLightRed = Math.floor(Math.random() * 255).toString(16);
-                var strLightGreen = Math.floor(Math.random() * 255).toString(16);
-                var strLightBlue = Math.floor(Math.random() * 255).toString(16);
-                var strHeavyRed = Math.floor(Math.random() * 255).toString(16);
-                var strHeavyGreen = Math.floor(Math.random() * 255).toString(16);
-                var strHeavyBlue = Math.floor(Math.random() * 255).toString(16);
-                numRandomLightColor = "#" + strLightRed + strLightGreen + strLightBlue;
-                numRandomHeavyColor = "#" + strHeavyRed + strHeavyGreen + strHeavyBlue;
-                $(this).css({ 'background-color': numRandomHeavyColor, 'color': numRandomLightColor, 'border': 'solid 1px ' + numRandomLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numRandomLightColor, 'color': numRandomHeavyColor, 'border': 'solid 1px ' + numRandomHeavyColor });
-            }).click(function () {
-                fnColorSet();
+            $('.select_skin .random').hover(function(){
+              strRandomRed = Math.floor(Math.random() * 255);
+              strRandomGreen = Math.floor(Math.random() * 255);
+              strRandomBlue = Math.floor(Math.random() * 255);
+              strLightRed = fnColorString(strRandomRed.toString(16));
+              strLightGreen = fnColorString(strRandomGreen.toString(16));
+              strLightBlue = fnColorString(strRandomBlue.toString(16));
+              strHeavyRed = fnColorString(Math.floor(255 - strRandomRed).toString(16));
+              strHeavyGreen = fnColorString(Math.floor(255 - strRandomGreen).toString(16));
+              strHeavyBlue = fnColorString(Math.floor(255 - strRandomBlue).toString(16));
+              strRandomLightColor = "#" + strLightRed + strLightGreen + strLightBlue;
+              strRandomHeavyColor = "#" + strHeavyRed + strHeavyGreen + strHeavyBlue;
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
+            }, function(){
+              $(this).css({'background-color' : strRandomLightColor, 'color' : strRandomHeavyColor, 'border' : 'solid 1px ' + strRandomHeavyColor});
+            }).click(function(){
+              fnColorSet();
+              strRandomRed = Math.floor(Math.random() * 255);
+              strRandomGreen = Math.floor(Math.random() * 255);
+              strRandomBlue = Math.floor(Math.random() * 255);
+              strLightRed = fnColorString(strRandomRed.toString(16));
+              strLightGreen = fnColorString(strRandomGreen.toString(16));
+              strLightBlue = fnColorString(strRandomBlue.toString(16));
+              strHeavyRed = fnColorString(Math.floor(255 - strRandomRed).toString(16));
+              strHeavyGreen = fnColorString(Math.floor(255 - strRandomGreen).toString(16));
+              strHeavyBlue = fnColorString(Math.floor(255 - strRandomBlue).toString(16));
+              strRandomLightColor = "#" + strLightRed + strLightGreen + strLightBlue;
+              strRandomHeavyColor = "#" + strHeavyRed + strHeavyGreen + strHeavyBlue;
+              $(this).css({'background-color' : strRandomHeavyColor, 'color' : strRandomLightColor, 'border' : 'solid 1px ' + strRandomLightColor});
             });
-            $('#land .resetBtn').hover(function () {
-                $(this).css({ 'background-color': numHeavyColor, 'color': numLightColor, 'border': 'solid 1px ' + numLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numLightColor, 'color': numHeavyColor, 'border': 'solid 1px ' + numHeavyColor });
-            }).click(function () {
-                fnReset();
+            $('#land .resetBtn').hover(function(){
+              $(this).css({'background-color' : strHeavyColor, 'color' : strLightColor, 'border' : 'solid 1px ' + strLightColor});
+            }, function(){
+              $(this).css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
+            }).click(function(){
+              fnReset();
             })
-            $('#land .restartBtn').hover(function () {
-                $(this).css({ 'background-color': numHeavyColor, 'color': numLightColor, 'border': 'solid 1px ' + numLightColor });
-            }, function () {
-                $(this).css({ 'background-color': numLightColor, 'color': numHeavyColor, 'border': 'solid 1px ' + numHeavyColor });
-            }).click(function () {
-                fnRestart();
+            $('#land .restartBtn').hover(function(){
+              $(this).css({'background-color' : strHeavyColor, 'color' : strLightColor, 'border' : 'solid 1px ' + strLightColor});
+            }, function(){
+              $(this).css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
+            }).click(function(){
+              fnRestart();
             })
         }
 
-        function fnColorSet() {
-            numLightColor = numRandomLightColor;
-            numHeavyColor = numRandomHeavyColor;
-            $('body').css({ 'background-color': numLightColor });
-            $('.select_skin').css({ 'border': 'solid 1px ' + numHeavyColor });
-            $('.select_skin .menu_text').css({ 'border': 'solid 1px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-            $('.select_difficulty').css({ 'border': 'solid 1px ' + numHeavyColor });
-            $('.select_difficulty .menu_text').css({ 'border': 'solid 1px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-            $('.select_difficulty .startBtn').css({ 'border': 'solid 1px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-            $('.select_difficulty .menuBtn').css({ 'border': 'solid 1px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-            $('.select_difficulty .menuClick').css({ 'border': 'solid 1px ' + numLightColor, 'color': numLightColor, 'background-color': numHeavyColor });
-            $('.select_difficulty .custumWrap').css({ 'border': 'solid 1px ' + numHeavyColor });
-            $('.select_difficulty .custumWrap .cmenu label').css({ 'color': numHeavyColor });
-            $('.select_difficulty .custumWrap .cmenu input').css({ 'border': 'solid 2px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-            $('#land #stage').css({ 'background-color': numLightColor, 'border': 'solid 1px ' + numHeavyColor });
-            $('#land #score').css({ 'color': numHeavyColor });
-            $('#land #score .information').css({ 'border': 'solid 3px ' + numHeavyColor });
-            $('#land .resetBtn').css({ 'background-color': numLightColor, 'color': numHeavyColor, 'border': 'solid 1px ' + numHeavyColor });
-            $('#land .restartBtn').css({ 'background-color': numLightColor, 'color': numHeavyColor, 'border': 'solid 1px ' + numHeavyColor });
+        function fnColorSet(){
+            strLightColor = strRandomLightColor;
+            strHeavyColor = strRandomHeavyColor;
+            $('body').css({'background-color' : strLightColor});
+            $('.select_skin').css({'border' : 'solid 1px ' + strHeavyColor});
+            $('.select_skin .menu_text').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
+            $('.select_difficulty').css({'border' : 'solid 1px ' + strHeavyColor});
+            $('.select_difficulty .menu_text').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
+            $('.select_difficulty .startBtn').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
+            $('.select_difficulty .menuBtn').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
+            $('.select_difficulty .menuClick').css({'border' : 'solid 1px ' + strLightColor, 'color' : strLightColor, 'background-color' : strHeavyColor});
+            $('.select_difficulty .custumWrap').css({'border' : 'solid 1px ' + strHeavyColor});
+            $('.select_difficulty .custumWrap .cmenu label').css({'color' : strHeavyColor});
+            $('.select_difficulty .custumWrap .cmenu input').css({'border' : 'solid 2px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
+            $('#land #stage').css({'background-color' : strLightColor, 'border' : 'solid 1px ' + strHeavyColor});
+            $('#land #score').css({'color' : strHeavyColor});
+            $('#land #score .information').css({'border' : 'solid 3px ' + strHeavyColor});
+            $('#land .resetBtn').css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
+            $('#land .restartBtn').css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
         }
 
         function fnMenu() {  //초기 메뉴판에 상호작용을 추가하는 함수
@@ -712,6 +740,16 @@ function GamePage() {
             return "";
         }
 
+        function fnColorString(_str){
+            if(_str.length == 1){
+              var strResult = '0' + _str;
+              return strResult;
+            }
+            else{
+              return _str;
+            }
+          }
+
         function fnTimeUpdate() {  // 지렁이가 스테이지를 한 칸 움직일 때마다 호출되는 함수
             // 현재 지렁이 머리의 Left, Top값을 가져옴
             var numHeadWidth = Number($('#head').css('left').split('px')[0]);
@@ -828,19 +866,7 @@ function GamePage() {
                         $('.recordCount').html(numScoreCount);
                         $('.recordRenewal').show('Fold');
                         $('.recordRenewal').css({ 'left': $('.recordCount').position().left + $('.recordCount').width() + 5 + 'px', 'top': $('.recordCount').position().top + ($('.recordCount').height() * 0.1) + 'px' });
-                        // if (strDifficulty == 'beginner') {
-                        //     setCookie('beginner', numScoreCount)
-                        // }
-                        // else if (strDifficulty == 'normal') {
-                        //     setCookie('normal', numScoreCount)
-                        // }
-                        // else if (strDifficulty == 'expert') {
-                        //     setCookie('expert', numScoreCount)
-                        // }
-                        // else if (strDifficulty == 'custum') {
-                        //     setCookie('custum', numScoreCount)
-                        // }
-                        // setCookie(strDifficulty, numScoreCount)
+                        setCookie(strDifficulty, numScoreCount)
                     }
                 }
             } catch (e) {
