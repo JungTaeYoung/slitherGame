@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         '/api',
         createProxyMiddleware({
-            target: 'http://mirimlab2nd.myds.me:5555',
+            target: 'http://localhost:5000',
             changeOrigin: true,
         })
     );

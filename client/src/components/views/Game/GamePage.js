@@ -1006,7 +1006,7 @@ function GamePage() {
                 </div>
                 <div className='restart'>
                     <div className='resetBtn'>메뉴로 이동</div>
-                    <div className='restartBtn'>다시 시작</div>
+                    <div className='restartBtn'>다시 시작 수정</div>
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@ function VideoDetailPage(props) {
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
                     <div style={{width:'100%', padding:'3rem 4rem'}}>
-                        <video style={{ width:'100%'}} src={`http://mirimlab2nd.myds.me:5555/${VideoDetail.filepath}`} controls />
+                        <video style={{ width:'100%'}} src={`http://localhost:5000/${VideoDetail.filepath}`} controls />
                         <List.Item
                             actions
                         >
