@@ -168,22 +168,22 @@ function GamePage() {
         function fnColorSet(){
             strLightColor = strRandomLightColor;
             strHeavyColor = strRandomHeavyColor;
-            $('body').css({'background-color' : strLightColor});
-            $('.select_skin').css({'border' : 'solid 1px ' + strHeavyColor});
-            $('.select_skin .menu_text').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
-            $('.select_difficulty').css({'border' : 'solid 1px ' + strHeavyColor});
-            $('.select_difficulty .menu_text').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
-            $('.select_difficulty .startBtn').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
-            $('.select_difficulty .menuBtn').css({'border' : 'solid 1px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
-            $('.select_difficulty .menuClick').css({'border' : 'solid 1px ' + strLightColor, 'color' : strLightColor, 'background-color' : strHeavyColor});
-            $('.select_difficulty .custumWrap').css({'border' : 'solid 1px ' + strHeavyColor});
-            $('.select_difficulty .custumWrap .cmenu label').css({'color' : strHeavyColor});
-            $('.select_difficulty .custumWrap .cmenu input').css({'border' : 'solid 2px ' + strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor});
-            $('#land #stage').css({'background-color' : strLightColor, 'border' : 'solid 1px ' + strHeavyColor});
-            $('#land #score').css({'color' : strHeavyColor});
-            $('#land #score .information').css({'border' : 'solid 3px ' + strHeavyColor});
-            $('#land .resetBtn').css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
-            $('#land .restartBtn').css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
+            $('body').stop().animate({'background-color' : strLightColor}, 200);
+            $('.select_skin').stop().animate({'border-color' : strHeavyColor}, 200);
+            $('.select_skin .menu_text').stop().animate({'border-color' : strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor}, 200);
+            $('.select_difficulty').stop().animate({'border-color' : strHeavyColor}, 200);
+            $('.select_difficulty .menu_text').stop().animate({'border-color' : strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor}, 200);
+            $('.select_difficulty .startBtn').stop().animate({'border-color' : strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor}, 200);
+            $('.select_difficulty .menuBtn').stop().animate({'border-color' : strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor}, 200);
+            $('.select_difficulty .menuClick').stop().animate({'border-color' : strLightColor, 'color' : strLightColor, 'background-color' : strHeavyColor}, 200);
+            $('.select_difficulty .custumWrap').stop().animate({'border-color' : strHeavyColor}, 200);
+            $('.select_difficulty .custumWrap .cmenu label').stop().animate({'color' : strHeavyColor}, 200);
+            $('.select_difficulty .custumWrap .cmenu input').stop().animate({'border-color' : strHeavyColor, 'color' : strHeavyColor, 'background-color' : strLightColor}, 200);
+            $('#land #stage').stop().animate({'background-color' : strLightColor, 'border-color' : strHeavyColor}, 200);
+            $('#land #score').stop().animate({'color' : strHeavyColor}, 200);
+            $('#land #score .information').stop().animate({'border-color' : strHeavyColor}, 200);
+            $('#land .resetBtn').stop().animate({'background-color' : strLightColor, 'color' : strHeavyColor, 'border-color' : strHeavyColor}, 200);
+            $('#land .restartBtn').stop().animate({'background-color' : strLightColor, 'color' : strHeavyColor, 'border-color' : strHeavyColor}, 200);
         }
 
         function fnMenu() {  //초기 메뉴판에 상호작용을 추가하는 함수
@@ -874,7 +874,7 @@ function GamePage() {
                         $('.recordRenewal').show('Fold');
                         $('.recordRenewal').css({ 'left': $('.recordCount').position().left + $('.recordCount').width() + 5 + 'px', 'top': $('.recordCount').position().top + ($('.recordCount').height() * 0.2) + 'px' });
                         /***요쪽에 numScoreCount 값을 DB에 저장시키는 함수 추가***/
-                        
+
                         /******************************************************/
                     }
                 }
