@@ -873,7 +873,9 @@ function GamePage() {
                         $('.recordCount').html(numScoreCount);
                         $('.recordRenewal').show('Fold');
                         $('.recordRenewal').css({ 'left': $('.recordCount').position().left + $('.recordCount').width() + 5 + 'px', 'top': $('.recordCount').position().top + ($('.recordCount').height() * 0.2) + 'px' });
-                        setCookie(strDifficulty, numScoreCount)
+                        /***요쪽에 numScoreCount 값을 DB에 저장시키는 함수 추가***/
+                        
+                        /******************************************************/
                     }
                 }
             } catch (e) {
