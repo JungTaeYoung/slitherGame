@@ -291,7 +291,7 @@ input:-ms-input-placeholder{
     font-size : 20px;
     font-weight : bold;
     text-align : center;
-    line-height : 35px;
+    line-height : 30px;
     cursor : pointer;
     color : black;
     background-color : white;
@@ -364,7 +364,7 @@ input:-ms-input-placeholder{
 #land > #score{
     position : relative;
     display : inline-block;
-    width : 300px;
+    width : 340px;
 }
 
 #land > #score > .combo{
@@ -419,7 +419,7 @@ input:-ms-input-placeholder{
 #land > #score > .recordScore > .recordRenewal{
     position : absolute;
     display : none;
-    font-size : 20px;
+    font-size : 17px;
     font-weight : bold;
     color : red;
 }

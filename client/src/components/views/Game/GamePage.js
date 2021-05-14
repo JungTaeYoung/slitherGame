@@ -76,6 +76,9 @@ function GamePage() {
 
 
         function fnColor(){
+            document.getElementById('root').childNodes[1].querySelectorAll('div')[0].setAttribute("ondragstart", "return false");
+            document.getElementById('root').childNodes[1].querySelectorAll('div')[0].setAttribute("onselectstart", "return false");
+            document.getElementById('root').childNodes[1].querySelectorAll('div')[0].setAttribute("oncontextmenu", "return false");
             $('.select_skin .default').hover(function(){
               strRandomLightColor = "#FFFFFF";
               strRandomHeavyColor = "#000000";
@@ -207,8 +210,8 @@ function GamePage() {
             }
             $('.select_difficulty .menuBtn').click(function () {
                 $('.startBtn').css({ 'display': 'block' });
-                $('.select_difficulty .menuBtn').removeClass('menuClick').css({ 'border': 'solid 1px ' + numHeavyColor, 'color': numHeavyColor, 'background-color': numLightColor });
-                $(this).addClass('menuClick').css({ 'border': 'solid 1px ' + numLightColor, 'color': numLightColor, 'background-color': numHeavyColor });
+                $('.select_difficulty .menuBtn').removeClass('menuClick').css({ 'border': 'solid 1px ' + strHeavyColor, 'color': strHeavyColor, 'background-color': strLightColor });
+                $(this).addClass('menuClick').css({ 'border': 'solid 1px ' + strLightColor, 'color': strLightColor, 'background-color': strHeavyColor });
                 if ($(this).attr('class').split('menuClick')[0].split('menuBtn')[1].replace(/ /g, '') == 'custum') {
                     $('.custumWrap').show('Fold');
                 }
@@ -216,7 +219,11 @@ function GamePage() {
                     $('.custumWrap').hide('Fold');
                 }
             });
-            $('.startBtn').click(function () {
+            $('.select_difficulty .startBtn').hover(function(){
+                $(this).css({'background-color' : strHeavyColor, 'color' : strLightColor, 'border' : 'solid 1px ' + strLightColor});
+            }, function(){
+              $(this).css({'background-color' : strLightColor, 'color' : strHeavyColor, 'border' : 'solid 1px ' + strHeavyColor});
+            }).click(function(){
                 strDifficulty = $('.menuClick').attr('class').split('menuClick')[0].split('menuBtn')[1].replace(/ /g, '');
                 if (strDifficulty == 'beginner') {
                     numTimeCheck = 200;
@@ -461,10 +468,10 @@ function GamePage() {
             numRecordCount = 0;
             $('.recordCount').html(numRecordCount);
             for (var i = 1; i <= numWidthLineCount; i++) {
-                strAppendTag += '<span class = "line width_' + i + '" style = "background-color : ' + numHeavyColor + '; width : 1px; height : ' + numHeightCount + 'px; left : ' + (i * numSquareWidth) + 'px; top : 0px"></span>';
+                strAppendTag += '<span class = "line width_' + i + '" style = "background-color : ' + strHeavyColor + '; width : 1px; height : ' + numHeightCount + 'px; left : ' + (i * numSquareWidth) + 'px; top : 0px"></span>';
             }
             for (var j = 1; j <= numHeightLineCount; j++) {
-                strAppendTag += '<span class = "line height_' + j + '" style = "background-color : ' + numHeavyColor + '; width : ' + numWidthCount + 'px; height : 1px; left : 0px; top : ' + (j * numSquareHeight) + 'px"></span>';
+                strAppendTag += '<span class = "line height_' + j + '" style = "background-color : ' + strHeavyColor + '; width : ' + numWidthCount + 'px; height : 1px; left : 0px; top : ' + (j * numSquareHeight) + 'px"></span>';
             }
             strAppendTag += '<div class = "count_wrap">';
             strAppendTag += '<div class = "count_ready">Ready...</div>';
@@ -517,9 +524,9 @@ function GamePage() {
             else { // 홀수면
                 $('.worm_head').css({ 'top': (numHeightCount / 2) + (numSquareHeight / 2) + 'px' });
             }
-            $('.worm_head').css({ 'width': numSquareWidth + 'px', 'height': numSquareHeight + 'px', 'border': 'solid ' + Number(((numSquareWidth / 2) - (numSquareWidth * 0.1)).toFixed(0)) + 'px ' + numHeavyColor, 'background-color': numLightColor });
+            $('.worm_head').css({ 'width': numSquareWidth + 'px', 'height': numSquareHeight + 'px', 'border': 'solid ' + Number(((numSquareWidth / 2) - (numSquareWidth * 0.1)).toFixed(0)) + 'px ' + strHeavyColor, 'background-color': strLightColor });
             for (var i = 1; i <= numWormBodyCount; i++) {
-                strWormBody += '<div class = "worms worm_body body_' + i + '" style = "background-color : ' + numHeavyColor + '; width : ' + numSquareWidth + 'px; height : ' + numSquareHeight + 'px; left : ' + Number($('#head').css('left').split('px')[0]) + 'px; top : ' + Number($('#head').css('top').split('px')[0]) + 'px;"></div>';
+                strWormBody += '<div class = "worms worm_body body_' + i + '" style = "background-color : ' + strHeavyColor + '; width : ' + numSquareWidth + 'px; height : ' + numSquareHeight + 'px; left : ' + Number($('#head').css('left').split('px')[0]) + 'px; top : ' + Number($('#head').css('top').split('px')[0]) + 'px;"></div>';
             }
             $('#stage').append(strWormBody);
         }
@@ -587,7 +594,7 @@ function GamePage() {
                 $('.restart').hide();
                 $('#land').hide('Fold', function foldNext() {
                     $('#stage').empty();
-                    $('.menu').show('Fold');
+                    $('.gamemenu').show('Fold');
                     arrWormMoveLeft = new Array();
                     arrWormMoveTop = new Array();
                     arrWormMoveWay = new Array();
@@ -663,7 +670,7 @@ function GamePage() {
             if (arrFoodSpace.length > 0) {
                 numRandomSpace = Math.floor(Math.random() * arrFoodSpace.length);
                 $('#stage').append('<div id = "food"></div>');
-                $('#food').css({ 'width': numSquareWidth - 1 + 'px', 'height': numSquareHeight - 1 + 'px', 'left': arrFoodSpace[numRandomSpace][0] + 'px', 'top': arrFoodSpace[numRandomSpace][1] + 'px', 'background-color': numHeavyColor, 'border': 'solid 1px ' + numLightColor });
+                $('#food').css({ 'width': numSquareWidth - 1 + 'px', 'height': numSquareHeight - 1 + 'px', 'left': arrFoodSpace[numRandomSpace][0] + 'px', 'top': arrFoodSpace[numRandomSpace][1] + 'px', 'background-color': strHeavyColor, 'border': 'solid 1px ' + strLightColor });
             }
             else {
                 fnGameClear();
@@ -838,7 +845,7 @@ function GamePage() {
             numTurnCount++; // 턴 증가
             // 현재 지렁이의 길이가 numWormBodyCount보다 작을 경우 몸체를 1씩 추가
             if ($('.worms').length < numWormBodyCount) {
-                var strBodyAppend = '<div class = "worms worm_body body_' + $('.worms').length + '" style = "background-color : ' + numHeavyColor + '; width : ' + numSquareWidth + 'px; height : ' + numSquareHeight + 'px; left : ' + arrWormMoveLeft[numTurnCount - ($('.worms').length)] + 'px; top : ' + arrWormMoveTop[numTurnCount - ($('.worms').length)] + 'px;"></div>';
+                var strBodyAppend = '<div class = "worms worm_body body_' + $('.worms').length + '" style = "background-color : ' + strHeavyColor + '; width : ' + numSquareWidth + 'px; height : ' + numSquareHeight + 'px; left : ' + arrWormMoveLeft[numTurnCount - ($('.worms').length)] + 'px; top : ' + arrWormMoveTop[numTurnCount - ($('.worms').length)] + 'px;"></div>';
                 $('#stage').append(strBodyAppend);
             }
             //
@@ -860,12 +867,12 @@ function GamePage() {
                     }
                     clearInterval(objWormTimer);
                     objWormTimer = setInterval(fnTimeUpdate, numTimeCheck);
-                    numScoreCount += Math.floor(100 * (0.1 * numComboCount + 1));
+                    numScoreCount += Math.floor(100 * (0.1 * (numComboCount - 1) + 1));
                     $('.scoreCount').html(numScoreCount);
                     if (numScoreCount > numRecordCount) {
                         $('.recordCount').html(numScoreCount);
                         $('.recordRenewal').show('Fold');
-                        $('.recordRenewal').css({ 'left': $('.recordCount').position().left + $('.recordCount').width() + 5 + 'px', 'top': $('.recordCount').position().top + ($('.recordCount').height() * 0.1) + 'px' });
+                        $('.recordRenewal').css({ 'left': $('.recordCount').position().left + $('.recordCount').width() + 5 + 'px', 'top': $('.recordCount').position().top + ($('.recordCount').height() * 0.2) + 'px' });
                         setCookie(strDifficulty, numScoreCount)
                     }
                 }
@@ -1032,7 +1039,7 @@ function GamePage() {
                 </div>
                 <div className='restart'>
                     <div className='resetBtn'>메뉴로 이동</div>
-                    <div className='restartBtn'>다시 시작 수정</div>
+                    <div className='restartBtn'>다시 시작</div>
                 </div>
             </div>
         </div>
